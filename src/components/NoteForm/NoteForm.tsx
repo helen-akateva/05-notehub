@@ -1,7 +1,7 @@
-import css from "./NoteForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import type { NoteTag } from "../../types/note";
+import css from "./NoteForm.module.css";
 
 interface NoteFormValues {
   title: string;
@@ -20,9 +20,7 @@ const validationSchema = yup.object({
     .min(3, "Title must be at least 3 characters")
     .max(50, "Title must be at most 50 characters")
     .required("Title is required"),
-  content: yup
-    .string()
-    .max(500, "Content must be at most 500 characters"),
+  content: yup.string().max(500, "Content must be at most 500 characters"),
   tag: yup
     .string()
     .oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"])

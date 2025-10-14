@@ -1,30 +1,32 @@
-import css from "./App.module.css";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createNote, deleteNote, fetchNotes } from "../../services/noteService";
-import NoteList from "../NoteList/NoteList";
-import { useState } from "react";
 import { useDebounce } from "use-debounce";
+import { useState } from "react";
+import NoteList from "../NoteList/NoteList";
+
 import SearchBox from "../SearchBox/SearchBox";
 import Pagination from "../Pagination/Pagination";
 import Modal from "../Modal/Modal";
 import NoteForm from "../NoteForm/NoteForm";
 
+import css from "./App.module.css";
+
 export default function App() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [debouncedSearch] = useDebounce(search, 3000);
+  const [debouncedSearch] = useDebounce(search, 500);
 
   const queryClient = useQueryClient();
-  
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["notes", debouncedSearch, currentPage],
-    queryFn: () => fetchNotes({ 
-      search: debouncedSearch, 
-      page: currentPage,
-      perPage: 12 
-    }),
+    queryFn: () =>
+      fetchNotes({
+        search: debouncedSearch,
+        page: currentPage,
+        perPage: 12,
+      }),
   });
 
   const deleteMutation = useMutation({
@@ -59,17 +61,14 @@ export default function App() {
             onPageChange={handlePageChange}
           />
         )}
-        <button 
-          className={css.button}
-          onClick={() => setIsModalOpen(true)}
-        >
+        <button className={css.button} onClick={() => setIsModalOpen(true)}>
           Create note +
         </button>
       </header>
 
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error loading notes</p>}
-      
+
       {data?.notes && data.notes.length > 0 && (
         <NoteList
           notes={data.notes}
