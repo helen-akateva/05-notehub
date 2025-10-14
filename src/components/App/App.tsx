@@ -30,7 +30,7 @@ export default function App() {
     <div className={css.app}>
       <header className={css.toolbar}>
         {<SearchBox value={searchValue} onChange={setSearchValue} />}
-        {}
+        {/* {<Pagination/>} */}
         <button className={css.button}>Create note +</button>
       </header>
       {isLoading && <p>Loading...</p>}
