@@ -1,37 +1,40 @@
+import { useQueryClient } from '@tanstack/react-query';
 import css from './NoteForm.module.css';
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from "formik";
 import * as yup from "yup";
 
 export default function NoteForm() {
+   const queryClient = useQueryClient();
   
-  return <form className={css.form}>
+  return (<Formik initialValues={{}} onSubmit={() => { }}>
+    <Form className={css.form}>
   <div className={css.formGroup}>
     <label htmlFor="title">Title</label>
-    <input id="title" type="text" name="title" className={css.input} />
-    <span name="title" className={css.error} />
+    <Field id="title" type="text" name="title" className={css.input} />
+    <ErrorMessage component="span" name="title" className={css.error} />
   </div>
 
   <div className={css.formGroup}>
     <label htmlFor="content">Content</label>
-    <textarea
+    <Field as="textarea"
       id="content"
       name="content"
       rows={8}
       className={css.textarea}
     />
-    <span name="content" className={css.error} />
+    <ErrorMessage component="span" name="content"  className={css.error} />
   </div>
 
   <div className={css.formGroup}>
     <label htmlFor="tag">Tag</label>
-    <select id="tag" name="tag" className={css.select}>
+    <Field as="select" id="tag" name="tag" className={css.select}>
       <option value="Todo">Todo</option>
       <option value="Work">Work</option>
       <option value="Personal">Personal</option>
       <option value="Meeting">Meeting</option>
       <option value="Shopping">Shopping</option>
-    </select>
-    <span name="tag" className={css.error} />
+    </Field>
+    <ErrorMessage component="span" name="tag" className={css.error} />
   </div>
 
   <div className={css.actions}>
@@ -46,5 +49,6 @@ export default function NoteForm() {
       Create note
     </button>
   </div>
-</form>
+  </Form>
+  </Formik >);
 }
