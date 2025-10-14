@@ -1,6 +1,10 @@
 import css from './NoteForm.module.css';
+import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from "formik";
+import * as yup from "yup";
 
-<form className={css.form}>
+export default function NoteForm() {
+  
+  return <form className={css.form}>
   <div className={css.formGroup}>
     <label htmlFor="title">Title</label>
     <input id="title" type="text" name="title" className={css.input} />
@@ -43,3 +47,4 @@ import css from './NoteForm.module.css';
     </button>
   </div>
 </form>
+}
