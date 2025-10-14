@@ -12,24 +12,22 @@ interface CreateNoteData {
   tag: NoteTag;
 }
 
+interface FetchNotesParams {
+  search?: string;
+  tag?: string;
+  page?: number;
+  perPage?: number;
+  sortBy?: string;
+}
+
 const BASE_URL = "https://notehub-public.goit.study/api";
 axios.defaults.baseURL = BASE_URL;
 
 export async function fetchNotes(
-  search?: string,
-  tag?: string,
-  page?: number,
-  perPage?: number,
-  sortBy?: string
+ params?: FetchNotesParams
 ): Promise<FetchNotesResponse> {
   const response = await axios.get<FetchNotesResponse>("/notes", {
-    params: {
-      search,
-      tag,
-      page,
-      perPage,
-      sortBy,
-    },
+    params: params,
     headers: {
       Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`,
     },
