@@ -21,6 +21,7 @@
     border: 1px solid #ced4da;
     border-radius: 4px;
     resize: none;
+    background-color: #fff;
 }
 
 .actions {
