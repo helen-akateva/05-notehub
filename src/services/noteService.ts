@@ -24,7 +24,7 @@ const BASE_URL = "https://notehub-public.goit.study/api";
 axios.defaults.baseURL = BASE_URL;
 
 export async function fetchNotes(
- params?: FetchNotesParams
+  params?: FetchNotesParams
 ): Promise<FetchNotesResponse> {
   const response = await axios.get<FetchNotesResponse>("/notes", {
     params: params,
