@@ -16,11 +16,6 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
 
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
-    setCurrentPage(1);
-  };
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["notes", debouncedSearch, currentPage],
     queryFn: () =>
@@ -32,6 +27,10 @@ export default function App() {
     placeholderData: (previousData) => previousData,
   });
 
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  };
   const handlePageChange = (selectedItem: { selected: number }) => {
     setCurrentPage(selectedItem.selected + 1);
   };
