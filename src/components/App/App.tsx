@@ -1,9 +1,8 @@
-import { useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "../../services/noteService";
 import { useDebounce } from "use-debounce";
 import { useState } from "react";
 import NoteList from "../NoteList/NoteList";
-
 import SearchBox from "../SearchBox/SearchBox";
 import Pagination from "../Pagination/Pagination";
 import Modal from "../Modal/Modal";
@@ -17,7 +16,10 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
 
- 
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  };
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["notes", debouncedSearch, currentPage],
@@ -29,12 +31,6 @@ export default function App() {
       }),
     placeholderData: (previousData) => previousData,
   });
-const handleSearchChange = (value: string) => {
-  setSearch(value);
-  setCurrentPage(1); // скидаємо на першу сторінку при пошуку
-};
-
-
 
   const handlePageChange = (selectedItem: { selected: number }) => {
     setCurrentPage(selectedItem.selected + 1);
@@ -61,7 +57,7 @@ const handleSearchChange = (value: string) => {
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error loading notes</p>}
 
-     {data?.notes && data.notes.length > 0 && <NoteList notes={data.notes} />}
+      {data?.notes && data.notes.length > 0 && <NoteList notes={data.notes} />}
 
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
